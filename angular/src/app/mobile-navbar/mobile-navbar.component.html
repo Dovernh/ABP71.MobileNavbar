@@ -1,0 +1,78 @@
+<div class="lpx-mobile-navbar-container">
+  <div class="lpx-mobile-navbar">
+    <ul class="lpx-mobile-nav-tabs">
+      <!-- <li class="lpx-mobile-nav-tab"
+        *ngFor="let tab of navTabs"
+        [routerLink]="tab.link"
+        [routerLinkActive]="tab.link ? 'selected' : ''"
+        [routerLinkActiveOptions]="{ exact: tab.link === '/' }"
+        [class.selected]="tab.expanded">
+        <a class="lpx-mobile-nav-item">
+          <lpx-icon class="menu-item-icon"
+            *ngIf="tab.icon"
+            [iconClass]="tab.icon"></lpx-icon>
+          <span class="mobile-item-text">
+            {{ tab.mobileMenuText || tab.text | toObservable | async }}
+          </span>
+        </a>
+      </li> -->
+
+      <li class="lpx-mobile-nav-tab" (click)="toggleMenu('settings', settingsMenuItems)"
+        [class.selected]="activeMenu === 'settings'">
+        <a class="lpx-mobile-nav-item">
+          <lpx-icon class="menu-item-icon" iconClass="fas fa-home"></lpx-icon>
+          <span class="mobile-item-text">
+            {{ "Home" | lpxTranslate | async }}
+          </span>
+        </a>
+      </li>
+
+      <li class="lpx-mobile-nav-tab" (click)="toggleMenu('settings', settingsMenuItems)"
+        [class.selected]="activeMenu === 'settings'">
+        <a class="lpx-mobile-nav-item">
+          <lpx-icon class="menu-item-icon" iconClass="gearConnected"></lpx-icon>
+          <!-- TODO: PROVIDE API -->
+          <span class="mobile-item-text">{{
+            settingsTitle | lpxTranslate | async
+            }}</span>
+        </a>
+      </li>
+
+      <li class="lpx-mobile-nav-tab menu-toggle">
+        <a class="lpx-mobile-hamburger" [ngClass]="toggleClass" (click)="toggleNavbarMenu()">
+          <span class="hamburger-icon" aria-hidden="true" [class.lpx-mobile-menu-opn]="activeMenu === 'navbar'">
+            <span class="icon-part"></span>
+            <span class="icon-part"></span>
+            <span class="icon-part"></span>
+            <span class="icon-part"></span>
+            <span class="icon-part"></span>
+            <span class="icon-part"></span>
+          </span>
+        </a>
+      </li>
+
+      <li class="lpx-mobile-nav-tab" (click)="profileMenuItems && toggleMenu('profile', profileMenuItems)"
+        [class.selected]="activeMenu === 'profile'">
+        <a class="lpx-mobile-nav-item">
+          <lpx-avatar [avatar]="userProfile.avatar"></lpx-avatar>
+          <span class="mobile-item-text">{{ userProfile.userName }}</span>
+        </a>
+      </li>
+
+      <li class="lpx-mobile-nav-tab" (click)="profileMenuItems">
+        <a class="lpx-mobile-nav-item otised-alerts">
+          <app-alerts />
+          <div class="mobile-item-text">{{
+            'Alerts' | lpxTranslate | async
+            }}</div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="lpx-mobile-menu" [hidden]="!menuVisible">
+    <div class="lpx-logo-container"><lpx-brand-logo></lpx-brand-logo></div>
+    <lpx-navbar-routes [navbarItems]="selectedMenuItems" (routeClick)="closeMenu()">
+    </lpx-navbar-routes>
+  </div>
+</div>
